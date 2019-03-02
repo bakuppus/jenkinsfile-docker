@@ -20,7 +20,7 @@ node {
     tagDockerApp = "18.219.249.212:8081/docker-app/tomcat8:${env.BUILD_NUMBER}"
     docker.build(tagDockerApp)
 
-   
+    server.bypassProxy = true
     // Step 3: Push the image to Artifactory.
     // Make sure that <artifactoryDockerRegistry> is configured to reference <targetRepo> Artifactory repository. In case it references a different repository, your build will fail with "Could not find manifest.json in Artifactory..." following the push.
     def buildInfo = rtDocker.push '18.219.249.212:8081/docker-app/tomcat8:${env.BUILD_NUMBER}'
