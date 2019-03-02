@@ -10,6 +10,7 @@ node {
     def rtServer = Artifactory.server 'Jfrog'
     def rtDocker = Artifactory.docker server: rtServer
     def buildInfo = Artifactory.newBuildInfo()
+    def ARTDOCKER_REGISTRY = 18.219.249.212:8081
     def tagDockerApp
 
     buildInfo.env.capture = true
@@ -39,8 +40,7 @@ node {
     //Build docker image named docker-app
     stage ('Build & Deploy') {
         dir ('.') {
-            sh "sed -i 's/docker.artifactory/${ARTDOCKER_REGISTRY}/' Dockerfile"
-            tagDockerApp = "${ARTDOCKER_REGISTRY}/docker-app:${env.BUILD_NUMBER}"
+            tagDockerApp = "18.219.249.212:8081/docker-app:${env.BUILD_NUMBER}"
             println "Docker App Build"
             docker.build(tagDockerApp)
             println "Docker push" + tagDockerApp + " : " + REPO
