@@ -43,8 +43,9 @@ node {
             println "Docker App Build"
             docker.build(tagDockerApp)
             server.bypassProxy = true
+            //def buildInfo = rtDocker.push '<artifactoryDockerRegistry>/hello-world:latest', '<targetRepo>'
             println "Docker push" + tagDockerApp
-            buildInfo = rtDocker.push(tagDockerApp, buildInfo)
+            buildInfo = rtDocker.push '(tagDockerApp, buildInfo)'
             println "Docker Buildinfo"
             rtServer.publishBuildInfo buildInfo
         }
