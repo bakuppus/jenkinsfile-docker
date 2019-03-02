@@ -23,7 +23,7 @@ node {
                     "files": [
                       {
                         "pattern": "maven-snapshot/*.war",
-                        "target": "war/webservice.war",
+                        "target": "webservice.war",
                         "props": "unit-test=pass",
                         "flat": "true"
                       }
