@@ -11,6 +11,7 @@ node {
     def rtDocker = Artifactory.docker server: rtServer
     def buildInfo = Artifactory.newBuildInfo()
     def tagDockerApp
+    def server.bypassProxy = true
 
     buildInfo.env.capture = true
 
@@ -42,7 +43,6 @@ node {
             tagDockerApp = "18.219.249.212:8081/docker-app/tomcat8:${env.BUILD_NUMBER}"
             println "Docker App Build"
             docker.build(tagDockerApp)
-            server.bypassProxy = true
             //buildInfo = rtDocker.push "18.219.249.212:8081/docker-app/tomcat8:${env.BUILD_NUMBER}"
             println "Docker push" + tagDockerApp
             buildInfo = rtDocker.push(tagDockerApp)
