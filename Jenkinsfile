@@ -9,7 +9,7 @@ node {
     git url: 'https://github.com/bakuppus/jenkinsfile-docker.git', branch: 'master'
     def rtServer = Artifactory.server 'Jfrog'
     def rtDocker = Artifactory.docker server: rtServer
-    def buildInfo = Artifactory.newBuildInfo()
+    //def buildInfo = Artifactory.newBuildInfo()
     def tagDockerApp
 
     buildInfo.env.capture = true
@@ -43,9 +43,9 @@ node {
             println "Docker App Build"
             docker.build(tagDockerApp)
             server.bypassProxy = true
-            //def buildInfo = rtDocker.push '<artifactoryDockerRegistry>/hello-world:latest', '<targetRepo>'
-            println "Docker push" + tagDockerApp
-            buildInfo = rtDocker.push '(tagDockerApp, buildInfo)'
+            def buildInfo = rtDocker.push "18.219.249.212:8081/docker-app/tomcat8:${env.BUILD_NUMBER}"
+            //println "Docker push" + tagDockerApp
+            //buildInfo = rtDocker.push(tagDockerApp, buildInfo)
             println "Docker Buildinfo"
             rtServer.publishBuildInfo buildInfo
         }
