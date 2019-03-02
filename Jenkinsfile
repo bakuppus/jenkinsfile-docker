@@ -43,7 +43,7 @@ node {
             println "Docker App Build"
             docker.build(tagDockerApp)
             println "Docker push" + tagDockerApp
-            buildInfo = rtDocker.push(tagDockerApp, buildInfo)
+            buildInfo = rtDocker.push(tagDockerApp/tomcat8, buildInfo)
             println "Docker Buildinfo"
             rtServer.publishBuildInfo buildInfo
         }
