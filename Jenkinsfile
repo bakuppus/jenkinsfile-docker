@@ -39,11 +39,11 @@ node {
     //Build docker image named docker-app
     stage ('Build & Deploy') {
         dir ('.') {
-            tagDockerApp = "18.219.249.212:8081/docker-app:${env.BUILD_NUMBER}"
+            tagDockerApp = "18.219.249.212:8081/docker-app/tomcat8:${env.BUILD_NUMBER}"
             println "Docker App Build"
             docker.build(tagDockerApp)
             println "Docker push" + tagDockerApp
-            buildInfo = rtDocker.push(tagDockerApp/tomcat8, buildInfo)
+            buildInfo = rtDocker.push(tagDockerApp, buildInfo)
             println "Docker Buildinfo"
             rtServer.publishBuildInfo buildInfo
         }
