@@ -9,7 +9,7 @@ node {
     git url: 'https://github.com/bakuppus/jenkinsfile-docker.git', branch: 'master'
     def rtServer = Artifactory.server 'Jfrog'
     def rtDocker = Artifactory.docker server: rtServer
-    //def buildInfo = Artifactory.newBuildInfo()
+    def buildInfo = Artifactory.newBuildInfo()
     def tagDockerApp
 
     buildInfo.env.capture = true
