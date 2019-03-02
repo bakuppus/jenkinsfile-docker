@@ -43,9 +43,9 @@ node {
             println "Docker App Build"
             docker.build(tagDockerApp)
             server.bypassProxy = true
-            buildInfo = rtDocker.push "18.219.249.212:8081/docker-app/tomcat8:${env.BUILD_NUMBER}"
-            //println "Docker push" + tagDockerApp
-            //buildInfo = rtDocker.push(tagDockerApp, buildInfo)
+            //buildInfo = rtDocker.push "18.219.249.212:8081/docker-app/tomcat8:${env.BUILD_NUMBER}"
+            println "Docker push" + tagDockerApp
+            buildInfo = rtDocker.push(tagDockerApp)
             println "Docker Buildinfo"
             rtServer.publishBuildInfo buildInfo
         }
