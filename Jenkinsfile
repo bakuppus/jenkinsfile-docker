@@ -42,7 +42,7 @@ node {
             tagDockerApp = "18.219.249.212:8081/docker-app:${env.BUILD_NUMBER}"
             println "Docker App Build"
             docker.build(tagDockerApp)
-            println "Docker push" + tagDockerApp + " : " + REPO
+            println "Docker push" + tagDockerApp + " : "
             buildInfo = rtDocker.push(tagDockerApp, buildInfo)
             println "Docker Buildinfo"
             rtServer.publishBuildInfo buildInfo
