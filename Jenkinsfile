@@ -10,7 +10,6 @@ node {
     def rtServer = Artifactory.server 'Jfrog'
     def rtDocker = Artifactory.docker server: rtServer
     def buildInfo = Artifactory.newBuildInfo()
-    def ARTDOCKER_REGISTRY = 18.219.249.212:8081
     def tagDockerApp
 
     buildInfo.env.capture = true
