@@ -7,47 +7,24 @@ node {
 
     //Clone example project from GitHub repository
     git url: 'https://github.com/bakuppus/jenkinsfile-docker.git', branch: 'master'
-    def rtServer = Artifactory.server 'Jfrog'
-    def rtDocker = Artifactory.docker server: rtServer
-    def buildInfo = Artifactory.newBuildInfo()
-    def tagDockerApp
-    def server.bypassProxy = true
 
-    buildInfo.env.capture = true
+    // Step 1: Obtain an Artifactiry instance, configured in Manage Jenkins --> Configure System:
+    def server = Artifactory.server 'Jfrog'
 
-    //Fetch all depedencies from Artifactory
-    stage ('Dependencies') {
-        dir ('.') {
-            try {
-                println "Gather Released Docker Framework and Gradle War file"
-                def gradleWarDownload = """{
-                    "files": [
-                      {
-                        "pattern": "maven-snapshot/*.war",
-                        "target": "webservice.war",
-                        "props": "unit-test=pass",
-                        "flat": "true"
-                      }
-                    ]
-                 }"""
-                rtServer.download(gradleWarDownload, buildInfo )
-            } catch (Exception e) {
-                println "Caught Exception during resolution. Message ${e.message}"
-                throw e
-            }
-        }
-    }
-    //Build docker image named docker-app
-    stage ('Build & Deploy') {
-        dir ('.') {
-            tagDockerApp = "18.219.249.212:8081/docker-app/tomcat8:${env.BUILD_NUMBER}"
-            println "Docker App Build"
-            docker.build(tagDockerApp)
-            //buildInfo = rtDocker.push "18.219.249.212:8081/docker-app/tomcat8:${env.BUILD_NUMBER}"
-            println "Docker push" + tagDockerApp
-            buildInfo = rtDocker.push(tagDockerApp)
-            println "Docker Buildinfo"
-            rtServer.publishBuildInfo buildInfo
-        }
-     }
- }
+    // Step 2: Create an Artifactory Docker instance:
+    def rtDocker = Artifactory.docker server: server
+    // Or if the docker daemon is configured to use a TCP connection:
+    // def rtDocker = Artifactory.docker server: server, host: "tcp://<docker daemon host>:<docker daemon port>"
+    // If your agent is running on OSX:
+    // def rtDocker= Artifactory.docker server: server, host: "tcp://127.0.0.1:1234"
+    tagDockerApp = "18.219.249.212:8081/docker-app/tomcat8:${env.BUILD_NUMBER}"
+    docker.build(tagDockerApp)
+
+   
+    // Step 3: Push the image to Artifactory.
+    // Make sure that <artifactoryDockerRegistry> is configured to reference <targetRepo> Artifactory repository. In case it references a different repository, your build will fail with "Could not find manifest.json in Artifactory..." following the push.
+    def buildInfo = rtDocker.push '18.219.249.212:8081/docker-app/tomcat8:${env.BUILD_NUMBER}'
+
+    // Step 4: Publish the build-info to Artifactory:
+    server.publishBuildInfo buildInfo
+}
