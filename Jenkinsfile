@@ -7,7 +7,7 @@ node {
 
     //Clone example project from GitHub repository
     git url: 'https://github.com/bakuppus/jenkinsfile-docker.git', branch: 'master'
-    def rtServer = Artifactory.server Jfrog
+    def rtServer = Artifactory.server 'Jfrog'
     def rtDocker = Artifactory.docker server: rtServer
     def buildInfo = Artifactory.newBuildInfo()
     def tagDockerApp
