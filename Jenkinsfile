@@ -37,8 +37,24 @@ pipeline {
                 // Step 4: Publish the build-info to Artifactory:
                 server.publishBuildInfo buildInfo
             }
-        }    
+        }
       }
      }
+
+
+             ////////// Step 1 //////////
+             stage('K8s and helm  checkup') {
+                 steps {
+
+                     // Validate kubectl
+                     sh "kubectl cluster-info"
+
+                     // Init helm client
+                     sh "helm init"
+                 }
+               }
+
+
+
     }
   }
