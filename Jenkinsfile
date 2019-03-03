@@ -4,12 +4,15 @@ pipeline {
    stages {
        stage('Artifactory') {
         steps {
+
             script {
               node {
 
                 // Cleanup workspace
                 deleteDir()
 
+                //copy war
+                sh "cp -rf /var/lib/jenkins/workspace/jenkinsfile/target/javaee7-simple-sample.war ${WORK_SPACE}"
 
                 def buildInfo = Artifactory.newBuildInfo()
                 def tagDockerApp
