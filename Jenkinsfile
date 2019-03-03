@@ -4,7 +4,8 @@ pipeline {
    stages {
        stage('Artifactory') {
         steps {
-            node {
+            script {
+              node {
 
                 // Cleanup workspace
                 deleteDir()
@@ -36,6 +37,7 @@ pipeline {
                 // Step 4: Publish the build-info to Artifactory:
                 server.publishBuildInfo buildInfo
             }
+        }    
       }
      }
     }
