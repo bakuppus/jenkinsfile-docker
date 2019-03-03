@@ -47,12 +47,15 @@ pipeline {
                  steps {
                      //userid
                      sh "id"
-                     
+
                      // Validate kubectl
                      sh "kubectl cluster-info"
 
                      // Init helm client
                      sh "helm init"
+
+                    //Install dev
+                    sh "helm install devapp --name devserver" 
                  }
                }
 
