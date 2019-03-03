@@ -45,7 +45,9 @@ pipeline {
              ////////// Step 1 //////////
              stage('K8s and helm  checkup') {
                  steps {
-
+                     //userid
+                     sh "id"
+                     
                      // Validate kubectl
                      sh "kubectl cluster-info"
 
