@@ -12,7 +12,7 @@ pipeline {
                 deleteDir()
 
                 //copy war
-                sh "cp -rf /var/lib/jenkins/workspace/jenkinsfile/target/javaee7-simple-sample.war ${WORK_SPACE}"
+                sh "cp -rf /var/lib/jenkins/workspace/jenkinsfile/target/javaee7-simple-sample.war ."
 
                 def buildInfo = Artifactory.newBuildInfo()
                 def tagDockerApp
