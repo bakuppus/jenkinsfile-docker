@@ -34,7 +34,7 @@ node {
             notifyBuild('STARTED')
 
             dir("place") {
-                sh 'mkdir bala'
+                sh 'mkdir bala1'
             }
         } catch (e) {
             // If there was an exception thrown, the build failed
