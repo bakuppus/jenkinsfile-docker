@@ -24,7 +24,7 @@ node {
         }
 
         // Send notifications
-        slackSend (channel: '@me', color: colorCode, message: summary)
+        slackSend ( color: colorCode, message: summary)
     }
 
 
