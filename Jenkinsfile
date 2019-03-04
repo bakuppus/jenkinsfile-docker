@@ -27,9 +27,7 @@ node {
         slackSend (channel: '@me', color: colorCode, message: summary)
     }
 
-    stage ('Checkout') {
-        checkout( checkout stuff here )
-    }
+
 
     stage ('Build') {
         try {
