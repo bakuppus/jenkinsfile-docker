@@ -1,5 +1,3 @@
-
-23 lines (19 sloc) 438 Bytes
 node {
 
   // job
